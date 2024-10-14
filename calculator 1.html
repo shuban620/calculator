@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Calculator</title>
+    <link rel="stylesheet" href="Css practice/calculator 1.css">
+</head>
+
+<body>
+
+    <div id="calculator">
+        <input type="text" id="result" enabled>
+        <div class="button-container">
+            <input type="button" value="7" onclick="appendNumber('7')">
+            <input type="button" value="8" onclick="appendNumber('8')">
+            <input type="button" value="9" onclick="appendNumber('9')">
+            <input type="button" value="/" class="operator" onclick="setOperation('/')">
+
+            <input type="button" value="4" onclick="appendNumber('4')">
+            <input type="button" value="5" onclick="appendNumber('5')">
+            <input type="button" value="6" onclick="appendNumber('6')">
+            <input type="button" value="*" class="operator" onclick="setOperation('*')">
+
+            <input type="button" value="1" onclick="appendNumber('1')">
+            <input type="button" value="2" onclick="appendNumber('2')">
+            <input type="button" value="3" onclick="appendNumber('3')">
+            <input type="button" value="-" class="operator" onclick="setOperation('-')">
+
+            <input type="button" value="0" onclick="appendNumber('0')">
+            <input type="button" value="." onclick="appendNumber('.')">
+            <input type="button" value="C" class="clear" onclick="clearResult()">
+            <input type="button" value="+" class="operator" onclick="setOperation('+')">
+            <input type="button" value="=" class="equals" onclick="calculateResult()">
+        </div>
+    </div>
+
+    <script>
+        let currentNumber = '';
+        let previousNumber = '';
+        let operation = '';
+        let dotUsed = false;
+
+        function appendNumber(number) {
+            if (number === '.') {
+                if (dotUsed) return;
+                dotUsed = true;
+            }
+            currentNumber += number;
+            document.getElementById('result').value = currentNumber;
+        }
+
+        function setOperation(op) {
+            if (currentNumber === '') return;
+            operation = op;
+            previousNumber = currentNumber;
+            currentNumber = '';
+            dotUsed = false;
+        }
+
+        function calculateResult() {
+            let result;
+            const prev = parseFloat(previousNumber);
+            const current = parseFloat(currentNumber);
+            if (isNaN(prev) || isNaN(current)) return;
+
+            switch (operation) {
+                case '+':
+                    result = prev + current;
+                    break;
+                case '-':
+                    result = prev - current;
+                    break;
+                case '*':
+                    result = prev * current;
+                    break;
+                case '/':
+                    result = prev / current;
+                    break;
+                default:
+                    return;
+            }
+            currentNumber = result;
+            operation = '';
+            dotUsed = false;
+            document.getElementById('result').value = result;
+        }
+
+        function clearResult() {
+            currentNumber = '';
+            previousNumber = '';
+            operation = '';
+            dotUsed = false;
+            document.getElementById('result').value = '';
+        }
+    </script>
+
+</body>
+
+</html>
